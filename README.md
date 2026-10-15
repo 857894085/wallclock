@@ -1,8 +1,14 @@
 # 挂钟日历（WallClock）
 
+[![Release](https://img.shields.io/github/v/release/857894085/wallclock?display_name=tag)](https://github.com/857894085/wallclock/releases/latest)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Android 4.4+](https://img.shields.io/badge/Android-4.4%2B%20(API%2019)-3DDC84.svg)](#)
+[![无第三方依赖](https://img.shields.io/badge/dependencies-none-brightgreen.svg)](#)
+
 给旧安卓手机做的**天气 + 黄历 + 日历 + 时钟**全屏挂钟，用来当墙面挂历 / 桌面时钟长期挂机。
 
-- **APK 位置**：`output/WallClock.apk`
+- **下载**：到 [Releases](https://github.com/857894085/wallclock/releases/latest) 直接拿 `WallClock.apk`
+  （仓库里也放了一份：`output/WallClock.apk`）
 - **兼容范围**：Android 4.4（API 19）～ Android 14，横竖屏自适应
 - **包名**：`com.vincent.wallclock`　**版本**：1.8
 - **无第三方依赖**：不依赖 Google Play 服务、不依赖任何第三方库，天气走免费无需 Key 的 Open-Meteo
@@ -267,8 +273,12 @@ v1.6 从两头一起修：
 
 ## 二、安装
 
-1. 把 `WallClock.apk` 传到手机（微信文件传输 / 数据线 / 网盘都可以）。
+1. 到 [Releases](https://github.com/857894085/wallclock/releases/latest) 下载 `WallClock.apk`，
+   传到手机（微信文件传输 / 数据线 / 网盘都可以）。
+   也可以自己克隆仓库后取 `output/WallClock.apk`，或按「六、工程结构与自行构建」自己出包。
 2. 手机上点开安装，若提示"未知来源"，在弹窗里选择允许安装。
+   **从旧版本升级**：只要 APK 是同一个密钥签的就能直接覆盖安装；若提示签名不一致，
+   先卸载旧版（设置会被一并清掉）。
 3. 首次打开会申请定位权限：
    - **允许**：自动定位到你所在城市，换地方也能用；
    - **拒绝也没关系**：点右下角齿轮 → 城市与天气源 → 当前城市 → 从内置城市列表选择（约 180 个城市，离线可用），或联网搜索、手填经纬度。
