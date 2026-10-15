@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.vincent.wallclock"
+    android:versionCode="9"
+    android:versionName="1.8">
+
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="33" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|uiMode|density"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!--
+                同时声明成桌面（HOME）候选：旧手机改挂钟时，把本应用设为默认桌面
+                是最可靠的自启方式——按 Home 键就回挂钟，也不受 Android 10+
+                「后台不能启动界面」的限制。不设也没影响，只是多一个可选桌面。
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|density"
+            android:exported="false"
+            android:label="@string/settings_title"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/SettingsTheme" />
+
+        <!--
+            开机自启。directBootAware 是为了也能收到 LOCKED_BOOT_COMPLETED
+            （加密设备上它比 BOOT_COMPLETED 早，能在解锁前抢跑）；此时读不到
+            凭据加密存储里的设置，所以 BootReceiver 里读设置一律兜底。
+            QUICKBOOT_POWERON 有两个写法：标准名与 HTC 私有前缀，部分 ROM 只发后者。
+        -->
+        <receiver
+            android:name=".BootReceiver"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 看门狗自检。只由本应用的显式 PendingIntent 触发，所以不导出 -->
+        <receiver
+            android:name=".WatchdogReceiver"
+            android:exported="false" />
+    </application>
+</manifest>

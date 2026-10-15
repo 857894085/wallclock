@@ -1,0 +1,18 @@
+# 默认按文本处理，自动识别二进制
+* text=auto
+
+# 构建产物与密钥按二进制处理，避免 git 改动它们
+*.apk   binary
+*.idsig binary
+*.jks   binary
+*.keystore binary
+*.png   binary
+
+# 农历回归基准 CSV 强制原样保存：
+# 这是 TestLunar 的逐日基准数据（73018 天），必须逐字节和生成时一致，
+# 绝不能让 git 在 checkout 时改写行尾。
+*.csv -text
+
+# Windows 脚本保持 CRLF
+*.ps1 text eol=crlf
+*.bat text eol=crlf
